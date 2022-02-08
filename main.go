@@ -87,9 +87,14 @@ func main() {
 	//
 	// Serve API
 	//
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("defaulting to port %s", port)
+	}
 	http.HandleFunc("/docs/", httpSwagger.WrapHandler)
 	http.HandleFunc("/memory", srvHandler.ServeHTTP)
-	log.Fatalln(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
+	log.Fatalln(http.ListenAndServe(":"+port, nil))
 }
 
 func init() {
