@@ -1,0 +1,177 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Key value store restful api",
+        "title": "Key Value Store Restful API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8082",
+    "basePath": "/",
+    "paths": {
+        "/memory": {
+            "get": {
+                "description": "Read the value of the key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Read Value",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Key",
+                        "name": "key",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Store"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Set a new key with value",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Create New Store",
+                "parameters": [
+                    {
+                        "description": "Example Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.SetMemory"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Store"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete all store values",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Flush",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.ApiResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Store"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.ApiResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "Data of the response"
+                },
+                "description": {
+                    "description": "Description of the response",
+                    "type": "string"
+                },
+                "status_code": {
+                    "description": "Status code of the response",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.SetMemory": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "description": "Key of the store",
+                    "type": "string",
+                    "x-order": "1",
+                    "example": "foo"
+                },
+                "value": {
+                    "description": "Value of the store",
+                    "type": "string",
+                    "x-order": "2",
+                    "example": "bar"
+                }
+            }
+        },
+        "model.Store": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "description": "Key of the store",
+                    "type": "string",
+                    "x-order": "1",
+                    "example": "foo"
+                },
+                "value": {
+                    "description": "Value of the store",
+                    "type": "string",
+                    "x-order": "1",
+                    "example": "bar"
+                }
+            }
+        }
+    }
+}

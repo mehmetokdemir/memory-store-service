@@ -1,0 +1,112 @@
+basePath: /
+definitions:
+  model.ApiResponse:
+    properties:
+      data:
+        description: Data of the response
+      description:
+        description: Description of the response
+        type: string
+      status_code:
+        description: Status code of the response
+        type: integer
+    type: object
+  model.SetMemory:
+    properties:
+      key:
+        description: Key of the store
+        example: foo
+        type: string
+        x-order: "1"
+      value:
+        description: Value of the store
+        example: bar
+        type: string
+        x-order: "2"
+    type: object
+  model.Store:
+    properties:
+      key:
+        description: Key of the store
+        example: foo
+        type: string
+        x-order: "1"
+      value:
+        description: Value of the store
+        example: bar
+        type: string
+        x-order: "1"
+    type: object
+host: localhost:8082
+info:
+  contact: {}
+  description: Key value store restful api
+  title: Key Value Store Restful API
+  version: "1.0"
+paths:
+  /memory:
+    delete:
+      description: Delete all store values
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ApiResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Store'
+              type: object
+      summary: Flush
+      tags:
+      - Memory
+    get:
+      description: Read the value of the key
+      parameters:
+      - description: Key
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ApiResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Store'
+              type: object
+      summary: Read Value
+      tags:
+      - Memory
+    post:
+      description: Set a new key with value
+      parameters:
+      - description: Example Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.SetMemory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ApiResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Store'
+              type: object
+      summary: Create New Store
+      tags:
+      - Memory
+swagger: "2.0"

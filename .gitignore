@@ -1,0 +1,6 @@
+.vscode/
+.idea/
+bin/
+data/
+.history/
+.DS_Store
