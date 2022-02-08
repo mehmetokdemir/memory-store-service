@@ -12,8 +12,6 @@ const (
 	DescriptionEnumBodyError       DescriptionEnum = "Request body or parameters wrong"
 	DescriptionEnumBodyDecodeError DescriptionEnum = "Can not decode data"
 	DescriptionEnumServerError     DescriptionEnum = "Server error"
-
-	DescriptionEnumCannotGetCurrencies DescriptionEnum = "Can not get currencies from coin market cap"
 )
 
 type ApiResponse struct {
@@ -22,6 +20,7 @@ type ApiResponse struct {
 	Data        interface{}     `json:"data,omitempty"`        // Data of the response
 }
 
+//GenerateResponse create own response
 func GenerateResponse(status int, description DescriptionEnum, data interface{}) ApiResponse {
 	return ApiResponse{
 		StatusCode:  status,

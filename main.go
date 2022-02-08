@@ -18,6 +18,25 @@ import (
 	"workout/memory-store-service/model"
 )
 
+func RequestLogger(targetMux http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+
+		targetMux.ServeHTTP(w, r)
+
+		// log request by who(IP address)
+		requesterIP := r.RemoteAddr
+
+		log.Printf(
+			"%s\t\t%s\t\t%s\t\t%v",
+			r.Method,
+			r.RequestURI,
+			requesterIP,
+			time.Since(start),
+		)
+	})
+}
+
 var srvHandler *handler.Handler
 
 var task = func() {
@@ -70,7 +89,7 @@ func main() {
 	//
 	http.HandleFunc("/docs/", httpSwagger.WrapHandler)
 	http.HandleFunc("/memory", srvHandler.ServeHTTP)
-	log.Fatalln(http.ListenAndServe(":8080", nil))
+	log.Fatalln(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
 
 func init() {
