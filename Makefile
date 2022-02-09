@@ -1,5 +1,8 @@
 include META
 
+#LD flags
+LDFLAGS := -w
+
 #Environment Settings
 BUILD_ENV_SET_FOR_LINUX := $(RUN_ENV_SET) GOOS=linux
 
@@ -20,6 +23,7 @@ tidy:
 lint:
 	@echo "[TIDY] Running golangci-lint run"
 	@golangci-lint run
+
 
 .PHONY: build
 build: tidy

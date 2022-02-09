@@ -1,16 +1,8 @@
-FROM golang:latest
-
+FROM golang:1.17-alpine as development
 WORKDIR /app
-
 COPY go.mod .
 COPY go.sum .
-
 RUN go mod download
-
 COPY . .
-
-ENV PORT 8080
-
-RUN go build
-
-CMD ["./memory-store-service"]
+RUN go build -o ./bin/memory-store-service .
+CMD ./bin/memory-store-service

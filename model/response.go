@@ -8,11 +8,18 @@ type Store struct {
 type DescriptionEnum string
 
 const (
-	DescriptionEnumSuccess         DescriptionEnum = "Success"
-	DescriptionEnumBodyError       DescriptionEnum = "Request body or parameters wrong"
-	DescriptionEnumBodyDecodeError DescriptionEnum = "Can not decode data"
-	DescriptionEnumServerError     DescriptionEnum = "Server error"
+	DescriptionEnumSuccess          DescriptionEnum = "Success"
+	DescriptionEnumBodyError        DescriptionEnum = "Request body or parameters wrong"
+	DescriptionEnumBodyDecodeError  DescriptionEnum = "Can not decode data"
+	DescriptionEnumValueTypeError   DescriptionEnum = "Value type is not a string"
+	DescriptionEnumKeyNotFoundError DescriptionEnum = "Key not found"
+	DescriptionEnumInvalidKeyError  DescriptionEnum = "Invalid key"
+	DescriptionEnumServerError      DescriptionEnum = "Server error"
 )
+
+func (e DescriptionEnum) String() string {
+	return string(e)
+}
 
 type ApiResponse struct {
 	StatusCode  int             `json:"status_code"`           // Status code of the response
