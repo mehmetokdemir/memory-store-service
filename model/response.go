@@ -11,6 +11,7 @@ const (
 	DescriptionEnumSuccess          DescriptionEnum = "Success"
 	DescriptionEnumBodyError        DescriptionEnum = "Request body or parameters wrong"
 	DescriptionEnumBodyDecodeError  DescriptionEnum = "Can not decode data"
+	DescriptionEnumBodyReadError    DescriptionEnum = "Can not read data"
 	DescriptionEnumValueTypeError   DescriptionEnum = "Value type is not a string"
 	DescriptionEnumKeyNotFoundError DescriptionEnum = "Key not found"
 	DescriptionEnumInvalidKeyError  DescriptionEnum = "Invalid key"

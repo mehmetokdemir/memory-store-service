@@ -1,0 +1,2 @@
+2022/02/09 18:04:39 server.log.go:27: remote:[::1]:62119 method:GET url:/memory?key=ok%C3%BC%C4%9F duration:83.643µs
+2022/02/09 18:04:46 server.log.go:27: remote:[::1]:62119 method:POST url:/memory duration:72.826µs

@@ -1,16 +1,12 @@
 package handler
 
 import (
-	// Go imports
-	"fmt"
 	"net/http"
-	"strings"
 	"sync"
 	"time"
 
 	// External imports
 	"github.com/patrickmn/go-cache"
-	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 const (
@@ -33,7 +29,6 @@ func Service() *Handler {
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Content-Type", "application/json")
 	w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
@@ -51,9 +46,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	case r.Method == http.MethodDelete:
 		h.Flush(w, r)
 		return
-	case r.Method == http.MethodGet && strings.Contains(r.URL.Path, "swagger"):
-		fmt.Println("girdi")
-		h.HandleFunc("/swagger/", httpSwagger.WrapHandler)
+	default:
+		http.Error(w, "method not found", http.StatusNotFound)
 		return
 	}
 }

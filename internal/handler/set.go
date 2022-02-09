@@ -4,7 +4,6 @@ import (
 	// Go imports
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	// External imports
@@ -26,8 +25,9 @@ func (h *Handler) Set(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil {
-		log.Printf("Error reading body: %v", err)
-		http.Error(w, "can't read body", http.StatusBadRequest)
+		if err := json.NewEncoder(w).Encode(GenerateResponse(http.StatusBadRequest, DescriptionEnumBodyReadError, err.Error())); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 		return
 	}
 
@@ -35,7 +35,6 @@ func (h *Handler) Set(w http.ResponseWriter, r *http.Request) {
 	if err := json.Unmarshal(body, &req); err != nil {
 		if err := json.NewEncoder(w).Encode(GenerateResponse(http.StatusBadRequest, DescriptionEnumBodyDecodeError, err.Error())); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
 		}
 		return
 	}
@@ -43,7 +42,6 @@ func (h *Handler) Set(w http.ResponseWriter, r *http.Request) {
 	if (req.Key == nil || *req.Key == "") || (req.Value == nil || *req.Value == "") {
 		if err := json.NewEncoder(w).Encode(GenerateResponse(http.StatusBadRequest, DescriptionEnumBodyError, nil)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
 		}
 		return
 	}

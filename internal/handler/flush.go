@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"sync"
+	"workout/memory-store-service/constant"
 
 	// Internal imports
 	. "workout/memory-store-service/model"
@@ -28,7 +29,7 @@ func (h *Handler) Flush(w http.ResponseWriter, r *http.Request) {
 	}()
 	go func() {
 		defer wg.Done()
-		_ = os.RemoveAll(File)
+		_ = os.RemoveAll(constant.TmpDataFile)
 	}()
 
 	go func() {
