@@ -25,11 +25,7 @@ import (
 var srvHandler *handler.Handler
 
 var task = func() {
-	// todo : check here
-	var result model.Result
-	if result == nil {
-		result = make(map[string]string)
-	}
+	result := make(model.Result)
 	cachedItems := srvHandler.Cache.Items()
 
 	srvHandler.Lock()
@@ -45,12 +41,11 @@ var task = func() {
 		fmt.Println("can not decode data", err.Error())
 		return
 	}
+
 	if err := os.WriteFile(constant.TmpDataFile, b, os.ModePerm); err != nil {
 		fmt.Println("can not write files", err.Error())
 		return
 	}
-
-	fmt.Println("worker result", result)
 }
 
 // @title Key Value Store Restful API
@@ -92,14 +87,15 @@ func main() {
 
 func init() {
 	srvHandler = handler.Service()
-	if err := os.Chmod(constant.TmpDataFile, 0777); err != nil {
-		fmt.Println("can not chmod file", err.Error())
-		return
-	}
 
 	jsonFile, err := os.Open(constant.TmpDataFile)
 	if err != nil {
 		fmt.Println("can not open file", err.Error())
+		return
+	}
+
+	if err := os.Chmod(constant.TmpDataFile, 0777); err != nil {
+		fmt.Println("can not chmod file", err.Error())
 		return
 	}
 
@@ -118,7 +114,6 @@ func init() {
 	}
 
 	for k, v := range result {
-		fmt.Println("k", k)
 		go srvHandler.Cache.Set(k, v, cache.NoExpiration)
 	}
 }

@@ -37,10 +37,9 @@ func (h *Handler) Flush(w http.ResponseWriter, r *http.Request) {
 		close(wgDone)
 	}()
 
-	if _, err := os.Stat(constant.TmpDataFile); err != nil || h.Cache.Items() == nil {
-		if err := json.NewEncoder(w).Encode(GenerateResponse(http.StatusOK, DescriptionEnumSuccess, nil)); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+	if err := json.NewEncoder(w).Encode(GenerateResponse(http.StatusOK, DescriptionEnumSuccess, nil)); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
+
 }
