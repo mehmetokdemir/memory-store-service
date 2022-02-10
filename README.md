@@ -29,7 +29,9 @@ docker run -p 8080:8080 --name memory-store-srv memory-app
 ```
 
 
+
 ##Endpoints
+
 Base path = /memory
 - Read value with a key
     > curl -X 'GET' \
