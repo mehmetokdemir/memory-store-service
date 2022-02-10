@@ -4,6 +4,7 @@ import (
 	// Go imports
 	"encoding/json"
 	"net/http"
+
 	// Internal imports
 	. "workout/memory-store-service/model"
 )

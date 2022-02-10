@@ -6,7 +6,6 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:8082",
     "basePath": "/",
     "paths": {
         "/memory": {
@@ -91,14 +90,14 @@
                 }
             },
             "delete": {
-                "description": "Delete all store values",
+                "description": "Delete all stored values and TIMESTAMP-data.json file",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Memory"
                 ],
-                "summary": "Flush",
+                "summary": "Flush Data",
                 "responses": {
                     "200": {
                         "description": "Success",

@@ -6,15 +6,15 @@ import (
 	"net/http"
 	"os"
 	"sync"
-	"workout/memory-store-service/constant"
 
 	// Internal imports
+	"workout/memory-store-service/constant"
 	. "workout/memory-store-service/model"
 )
 
 // Flush godoc
-// @Summary      Flush
-// @Description  Delete all store values
+// @Summary      Flush Data
+// @Description  Delete all stored values and TIMESTAMP-data.json file
 // @Tags         Memory
 // @Produce      json
 // @Success      200  {object}  ApiResponse{data=model.Store} "Success"
@@ -37,12 +37,7 @@ func (h *Handler) Flush(w http.ResponseWriter, r *http.Request) {
 		close(wgDone)
 	}()
 
-	select {
-	case <-wgDone:
-		break
-	}
-
-	if _, err := os.Stat(File); err != nil || h.Cache.Items() == nil {
+	if _, err := os.Stat(constant.TmpDataFile); err != nil || h.Cache.Items() == nil {
 		if err := json.NewEncoder(w).Encode(GenerateResponse(http.StatusOK, DescriptionEnumSuccess, nil)); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

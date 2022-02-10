@@ -1,24 +1,15 @@
 package handler
 
 import (
+	// Go imports
 	"log"
 	"net/http"
-	"net/http/httptest"
 	"os"
 	"time"
 )
 
-func LogRequest2(fn http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		req := httptest.NewRecorder()
-		fn(req, r)
-		log.Printf("%s %s %s response:%v\n", r.RemoteAddr, r.Method, r.URL, nil)
-		fn.ServeHTTP(w, r)
-	}
-}
-
-// LogRequest middleware
-func LogRequest(h http.Handler) http.Handler {
+// LogRequestMiddleware middleware
+func LogRequestMiddleware(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		h.ServeHTTP(w, r)

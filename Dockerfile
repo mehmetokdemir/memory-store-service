@@ -7,4 +7,5 @@ ADD ./server.log /server.log
 RUN go mod download
 COPY . .
 RUN go build -o ./bin/memory-store-service .
+EXPOSE 8080
 CMD ./bin/memory-store-service

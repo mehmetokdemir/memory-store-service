@@ -4,17 +4,19 @@ import (
 	// Go imports
 	"encoding/json"
 	"fmt"
-	httpSwagger "github.com/swaggo/http-swagger"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"time"
-	"workout/memory-store-service/constant"
 
+	// External imports
 	"github.com/go-co-op/gocron"
 	"github.com/patrickmn/go-cache"
+	httpSwagger "github.com/swaggo/http-swagger"
+
 	// Internal imports
+	"workout/memory-store-service/constant"
 	_ "workout/memory-store-service/docs"
 	"workout/memory-store-service/internal/handler"
 	"workout/memory-store-service/model"
@@ -54,7 +56,6 @@ var task = func() {
 // @title Key Value Store Restful API
 // @version 1.0
 // @description Key value store restful api
-// @host localhost:8082
 // @BasePath /
 func main() {
 	//
@@ -86,7 +87,7 @@ func main() {
 	http.HandleFunc("/docs/", httpSwagger.WrapHandler)
 	http.HandleFunc("/memory", srvHandler.ServeHTTP)
 
-	log.Fatalln(http.ListenAndServe(":"+port, handler.LogRequest(http.DefaultServeMux)))
+	log.Fatalln(http.ListenAndServe(":"+port, handler.LogRequestMiddleware(http.DefaultServeMux)))
 }
 
 func init() {

@@ -37,7 +37,6 @@ definitions:
         type: string
         x-order: "1"
     type: object
-host: localhost:8082
 info:
   contact: {}
   description: Key value store restful api
@@ -46,7 +45,7 @@ info:
 paths:
   /memory:
     delete:
-      description: Delete all store values
+      description: Delete all stored values and TIMESTAMP-data.json file
       produces:
       - application/json
       responses:
@@ -59,7 +58,7 @@ paths:
                 data:
                   $ref: '#/definitions/model.Store'
               type: object
-      summary: Flush
+      summary: Flush Data
       tags:
       - Memory
     get:
