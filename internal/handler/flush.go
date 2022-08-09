@@ -21,8 +21,6 @@ import (
 // @Success      200  {object}  ApiResponse{data=model.Store} "Success"
 // @Router       /memory [delete]
 func (h *Handler) Flush(w http.ResponseWriter, r *http.Request) {
-	
-	fmt.Println("Hi")
 
 	wgDone := make(chan bool)
 	var wg sync.WaitGroup
